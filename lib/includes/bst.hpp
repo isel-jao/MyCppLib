@@ -3,10 +3,18 @@
 
 #include "lib.hpp"
 
+enum Color
+{
+	NONE,
+	RED,
+	BLACK
+};
+
 template <typename K>
 struct rbt
 {
 	K key;
+	Color color;
 	rbt *left;
 	rbt *right;
 	rbt *parent;
@@ -22,11 +30,11 @@ struct rbt
 
 template <typename K>
 rbt<K>::rbt(K k)
-	: key(k), left(nullptr), right(nullptr), height(0), parent(nullptr) {}
+	: key(k), left(nullptr), right(nullptr), height(0), parent(nullptr), color(RED) {}
 
 template <typename K>
 rbt<K>::rbt(const rbt<K> &obj)
-	: key(obj.key), left(obj.left), right(obj.right), parent(nullptr), height(obj.height) {}
+	: key(obj.key), left(obj.left), right(obj.right), parent(nullptr), height(0) {}
 
 template <typename K>
 rbt<K>::~rbt() {}
@@ -43,19 +51,22 @@ Node *insert(Node *root, K key)
 	Node *tmp = root;
 
 	if (!root)
-		return nullptr;
+	{
+		root = new Node(key);
+		root->color = BLACK;
+		return root;
+	}
 	while (true)
 	{
 		if (root->key == key)
-			return root;
+			return tmp;
 		if (key < root->key)
 		{
 			if (root->left == nullptr)
 			{
 				root->left = new Node(key);
-				return root->left;
+				return tmp;
 			}
-			root->height++;
 			root = root->left;
 			continue;
 		}
@@ -64,9 +75,8 @@ Node *insert(Node *root, K key)
 			if (root->right == nullptr)
 			{
 				root->right = new Node(key);
-				return root->right;
+				return tmp;
 			}
-			root->height--;
 			root = root->right;
 			continue;
 		}
@@ -74,13 +84,38 @@ Node *insert(Node *root, K key)
 }
 
 template <typename Node>
-void print_tree(Node *root)
+void inorder(Node *root)
+{
+	static std::string colors[3] = {"NONE", "RED", "BLACK"};
+	if (!root)
+		return;
+	inorder(root->left);
+	std::cout << root->key
+			  // << ", " << root->height
+			  << ", " << colors[root->color]
+			  << std::endl;
+	inorder(root->right);
+}
+template <typename Node>
+void preorder(Node *root)
 {
 	if (!root)
 		return;
-	print_tree(root->left);
-	std::cout << root->key << ", " << root->height << std::endl;
-	print_tree(root->right);
+	std::cout << root->key
+			  //   << ", "<< root->height
+	<< std::endl;
+	preorder(root->left);
+	preorder(root->right);
+}
+
+template <typename K>
+K search(rbt<K> *root, K key)
+{
+	if (!root )
+		return K();
+	if (root->key == key)
+		return (root->key);
+	
 }
 
 template <typename Node>

@@ -2,18 +2,17 @@
 
 int main()
 {
-	rbt<int> *root = new rbt<int>(3);
+	rbt<int> *root = NULL;
 
-	insert(root, 56);
+	root = insert(root, 56);
 	insert(root, 6);
 	insert(root, 3);
+	insert(root, 300);
 	insert(root, 5);
 	insert(root, 7);
 	insert(root, 11);
-	print_tree(root);
+	inorder(root);
 
-	rotate_right(root->right);
-	log("=====================================");
-	print_tree(root->right);
+	// std::cout << search(4) << std::endl;
 	return 0;
 }
