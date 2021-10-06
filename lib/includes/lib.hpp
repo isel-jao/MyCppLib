@@ -11,19 +11,28 @@
 /* ************************************************************************** */
 
 #ifndef LIB_HPP
-# define LIB_HPP
+#define LIB_HPP
 
-# include <iostream>
-# include <string>
-# include <string.h>
-# include <vector>
-# include <stdio.h>
-# include <cmath>
+#include <iostream>
+#include <string>
+#include <string.h>
+#include <vector>
+#include <stdio.h>
+#include <cmath>
 
-# include "vec.hpp"
+#include "vec.hpp"
+#include "bst.hpp"
 
-int ft_max(int a, int b);
+template <typename T>
+void put(T const &x) { std::cout << x; }
 
+template <typename T>
+void log(T const &x) { std::cout << x << std::endl; }
 
+template <typename T>
+T max(T const &a, T const &b) { return (a >= b ? a : b); }
+
+template <typename T>
+T min(T const &a, T const &b) { return (a <= b ? a : b); }
 
 #endif

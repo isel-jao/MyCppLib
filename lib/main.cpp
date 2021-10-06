@@ -1,15 +1,19 @@
-# include "lib.hpp"
-
-std::ostream &operator<<(std::ostream &o, vec &rhs)
-{
-	o << "x: " << rhs.get_x() << " y: " << rhs.get_y() << " z: " << rhs.get_z();
-	return o;
-}
+#include "lib.hpp"
 
 int main()
 {
-	bool theory;
+	rbt<int> *root = new rbt<int>(3);
 
-	theory = 7;
-	std::cout << "bool = " << theory << std::endl;
+	insert(root, 56);
+	insert(root, 6);
+	insert(root, 3);
+	insert(root, 5);
+	insert(root, 7);
+	insert(root, 11);
+	print_tree(root);
+
+	rotate_right(root->right);
+	log("=====================================");
+	print_tree(root->right);
+	return 0;
 }

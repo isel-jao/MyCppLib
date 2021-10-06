@@ -1,8 +1,8 @@
-# include "lib.hpp"
+#include "lib.hpp"
 
 //constructors - copy constructurs - deconstructors //
 vec::vec() : x(0), y(0), z(0) {}
-vec::vec(int x, int y, int z) : x(x), y(y), z(z) {}
+vec::vec(double const &x, double const &y, double const &z) : x(x), y(y), z(z) {}
 
 vec::vec(vec const &obj)
 {
@@ -17,13 +17,13 @@ vec::~vec() {}
 //////////////////////////////////////////////////////////////////
 
 // getter - setter //
-float vec::get_x() { return this->x; }
-float vec::get_y() { return this->y; }
-float vec::get_z() { return this->z; }
+double vec::get_x() const { return this->x; }
+double vec::get_y() const { return this->y; }
+double vec::get_z() const { return this->z; }
 
-void vec::set_x(float x) { this->x = x; }
-void vec::set_y(float y) { this->y = y; }
-void vec::set_z(float z) { this->z = z; }
+void vec::set_x(double const &x) { this->x = x; }
+void vec::set_y(double const &y) { this->y = y; }
+void vec::set_z(double const &z) { this->z = z; }
 //////////////////////////////////////////////////////////////////
 
 // overload operators //
@@ -37,16 +37,24 @@ vec &vec::operator=(vec const &obj)
 	return (*this);
 }
 
-vec operator+(vec &v1, vec &v2)
+vec vec::operator+(vec const &v) const
 {
 	vec ans;
-	ans.set_x(v1.get_x() + v2.get_x());
-	ans.set_y(v1.get_y() + v2.get_y());
-	ans.set_z(v1.get_z() + v2.get_z());
+	ans.set_x(this->x + v.get_x());
+	ans.set_y(this->y + v.get_y());
+	ans.set_z(this->z + v.get_z());
+	return ans;
+}
+vec vec::operator-(vec const &v) const
+{
+	vec ans;
+	ans.set_x(this->x - v.get_x());
+	ans.set_y(this->y - v.get_y());
+	ans.set_z(this->z - v.get_z());
 	return ans;
 }
 
-vec vec::operator*(vec const &obj)
+vec vec::operator*(vec const &obj) const
 {
 	vec res;
 	res.x = y * obj.z - obj.y * z;
@@ -55,12 +63,17 @@ vec vec::operator*(vec const &obj)
 	return res;
 }
 
-
 //////////////////////////////////////////////////////////////////
 
 // member funcions //
-double vec::dist()
+double vec::dist() const
 {
 	return (sqrt(x * x + y * y + z * z));
 }
 //////////////////////////////////////////////////////////////////
+
+std::ostream &operator<<(std::ostream &o, vec const &rhs)
+{
+	o << "x: " << rhs.get_x() << " y: " << rhs.get_y() << " z: " << rhs.get_z();
+	return o;
+}
